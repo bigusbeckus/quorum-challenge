@@ -8,50 +8,54 @@ import {
 import { Icon } from "@iconify/react";
 import Image from "next/image";
 import shopifyIcon from "%/public/images/shopify-icon.png";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
+import { CompanyLogo } from "@/components/logo";
 
 export default function Home() {
   const [query, setQuery] = useState<string>();
+
+  function handleQueryChange(e: ChangeEvent<HTMLInputElement>) {
+    setQuery(e.target.value);
+  }
 
   return (
     <main className="flex h-full flex-col">
       {/* Navbar */}
       <div className="min-h-16 flex items-center justify-between px-4 py-2">
         {/* Logo */}
-        <div className="rounded py-1 text-sm font-extrabold capitalize opacity-40">
-          Company Name
-        </div>
+        <CompanyLogo />
 
-        <div className="flex gap-4">
-          <Icon icon="fe:commenting" className="h-4 w-4" />
-          <Icon icon="fe:bell" className="h-4 w-4" />
-          <Icon icon="fe:user" className="h-4 w-4" />
+        <div className="flex gap-6">
+          <Icon icon="fe:commenting" className="h-6 w-6" />
+          <Icon icon="fe:bell" className="h-6 w-6" />
+          <Icon icon="fe:user" className="h-6 w-6" />
         </div>
       </div>
 
-      <hr className="h-px w-full border-none bg-neutral-800" />
+      <hr className="h-px w-full border-none bg-neutral-200" />
 
       {/* Body */}
       <div className="flex-1 overflow-y-hidden">
         <div className="flex h-full">
           {/* Sidebar */}
-          <div className="flex h-full w-48 flex-col items-center gap-2 p-4">
-            <div className="text-white/70">Partners</div>
-            <div className="font-bold">Criteria</div>
-            <div className="text-white/70">Account</div>
+          <div className="flex h-full w-48 flex-col gap-1 divide-blue-100 overflow-auto p-4">
+            <div className="rounded-md px-4 py-2 text-gray-800">Partners</div>
+            <div className="rounded-md bg-blue-50 px-4 py-2 font-extrabold text-blue-500">
+              Criteria
+            </div>
+            <div className="rounded-md px-4 py-2 text-gray-800">Account</div>
           </div>
 
-          <div className="h-full w-px bg-neutral-800"></div>
+          <div className="h-full w-px bg-neutral-200"></div>
 
           {/* Main */}
           <div className="max-h-full flex-1 overflow-y-auto">
-            <div className="w-full p-4">
-              <h3 className="text-center font-extrabold">Set your criteria</h3>
-              <div className="py-2">
-                <hr className="h-px w-full border-none bg-neutral-800" />
-              </div>
+            <div className="flex w-full flex-col gap-2 p-4">
+              <h3 className="text-center text-2xl font-bold">
+                Set your criteria
+              </h3>
 
-              <div>
+              <div className="flex flex-col gap-8">
                 <Accordion defaultValue="something">
                   <AccordionItem value="something">
                     <AccordionTrigger>
@@ -62,9 +66,9 @@ export default function Home() {
                         {new Array(9).fill(0).map((_, i) => (
                           <div
                             key={i}
-                            className="flex flex-col gap-4 rounded p-2 outline outline-1 outline-white/10"
+                            className="flex flex-col gap-4 rounded-lg bg-white p-4 shadow outline outline-1 outline-neutral-200"
                           >
-                            <h6 className="font-bold">Brand name</h6>
+                            <h6 className="text-lg font-bold">Brand name</h6>
 
                             <div className="flex gap-4">
                               <div>
@@ -95,7 +99,7 @@ export default function Home() {
                             </div>
 
                             <div className="flex justify-center">
-                              <button className="rounded bg-emerald-900 p-2">
+                              <button className="rounded bg-emerald-300 px-8 py-2 font-bold shadow">
                                 View
                               </button>
                             </div>
@@ -121,15 +125,17 @@ export default function Home() {
                     </AccordionContent>
                   </AccordionItem>
                 </Accordion>
-                <div className="pt-4">
+
+                <div className="flex flex-col gap-2">
                   <div className="font-bold">New Search (+)</div>
                   <div className="flex gap-2">
                     <input
                       placeholder="Placeholder query"
-                      className="rounded-full px-4 text-black"
+                      className="rounded px-4 outline outline-1 outline-gray-400"
                       value={query}
+                      onChange={handleQueryChange}
                     />
-                    <div className="rounded-full bg-red-900 p-2">
+                    <div className="rounded-full bg-black p-2 text-white">
                       <Icon icon="fe:search" className="h-full w-full" />
                     </div>
                   </div>
