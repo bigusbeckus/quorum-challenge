@@ -8,7 +8,7 @@ export function Accordion(props: {
 }) {
   return (
     <RadixAccordion.Root
-      className="rounded"
+      className="overflow-hidden rounded-md p-px"
       type="single"
       collapsible
       defaultValue={props.defaultValue}
@@ -32,7 +32,7 @@ export const AccordionTrigger = forwardRef<
   HTMLButtonElement,
   { children?: React.ReactNode }
 >((props, ref) => (
-  <RadixAccordion.Header className="flex">
+  <RadixAccordion.Header className="flex px-4 py-2 shadow outline-none">
     <RadixAccordion.Trigger
       ref={ref}
       className="group flex flex-1 cursor-default items-center justify-between py-2"
@@ -55,7 +55,7 @@ export const AccordionContent = forwardRef<
 >((props, ref) => (
   <RadixAccordion.Content
     ref={ref}
-    className="data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp overflow-hidden p-px pl-6"
+    className="overflow-hidden bg-gray-50 p-4 outline outline-1 outline-neutral-200 data-[state=closed]:animate-slideUp data-[state=open]:animate-slideDown"
   >
     {props.children}
   </RadixAccordion.Content>
