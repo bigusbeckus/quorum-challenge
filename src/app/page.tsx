@@ -8,7 +8,7 @@ import {
 import { Icon } from "@iconify/react";
 import Image from "next/image";
 import shopifyIcon from "%/public/images/shopify-icon.png";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { CompanyLogo } from "@/components/logo";
 
 export default function Home() {
@@ -16,6 +16,10 @@ export default function Home() {
 
   function handleQueryChange(e: ChangeEvent<HTMLInputElement>) {
     setQuery(e.target.value);
+  }
+
+  function handleFormSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
   }
 
   return (
@@ -128,17 +132,20 @@ export default function Home() {
 
                 <div className="flex flex-col gap-2">
                   <div className="font-bold">New Search (+)</div>
-                  <div className="flex gap-2">
+                  <form className="flex gap-2" onSubmit={handleFormSubmit}>
                     <input
                       placeholder="Placeholder query"
                       className="rounded px-4 outline outline-1 outline-gray-400"
                       value={query}
                       onChange={handleQueryChange}
                     />
-                    <div className="rounded-full bg-black p-2 text-white">
+                    <button
+                      type="submit"
+                      className="rounded-full bg-black p-2 text-white"
+                    >
                       <Icon icon="fe:search" className="h-full w-full" />
-                    </div>
-                  </div>
+                    </button>
+                  </form>
                 </div>
               </div>
             </div>
