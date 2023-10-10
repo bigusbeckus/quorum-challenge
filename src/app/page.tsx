@@ -168,7 +168,7 @@ export default function Home() {
                     />
                     <button
                       type="submit"
-                      className="rounded-full bg-black p-2 text-white"
+                      className="rounded-full bg-black p-2 text-white transition-colors hover:bg-black/80 active:bg-black/70 disabled:bg-gray-400"
                       disabled={loading}
                     >
                       <Icon icon="fe:search" className="h-full w-full" />
