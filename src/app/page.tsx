@@ -6,10 +6,9 @@ import {
   AccordionTrigger,
 } from "@/components/accordion";
 import { Icon } from "@iconify/react";
-import { ChangeEvent, FormEvent, useCallback, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { CompanyLogo } from "@/components/logo";
 import { BrandCard } from "@/components/brand-card";
-import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
 import { searchBrands } from "@/services/search-brands";
 import { type BrandResult } from "@/services/search-brands";
 import { LoadingSpinner } from "@/components/loading-spinner";
@@ -18,8 +17,6 @@ interface FetchedQuery {
   query: string;
   results: BrandResult[];
 }
-
-const queryClient = new QueryClient();
 
 export default function Home() {
   const [q, setQ] = useState("");
