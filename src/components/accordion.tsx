@@ -5,6 +5,8 @@ import { Icon } from "@iconify/react";
 export function Accordion(props: {
   children?: React.ReactNode;
   defaultValue?: string;
+  value?: string;
+  onValueChange?: (value: string) => void;
 }) {
   return (
     <RadixAccordion.Root
@@ -12,6 +14,8 @@ export function Accordion(props: {
       type="single"
       collapsible
       defaultValue={props.defaultValue}
+      value={props.value}
+      onValueChange={props.onValueChange}
     >
       {props.children}
     </RadixAccordion.Root>
