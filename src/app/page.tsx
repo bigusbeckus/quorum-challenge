@@ -21,9 +21,9 @@ interface FetchedQuery {
 export default function Home() {
   const [q, setQ] = useState("");
   const [fetched, setFetched] = useState([] as FetchedQuery[]);
-  // const [lastFetchedIndex, setLastFetched] = useState(-1);
   const [accordionValue, setAccordionValue] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string>();
 
   function handleQueryChange(e: ChangeEvent<HTMLInputElement>) {
     setQ(e.target.value);
@@ -42,22 +42,38 @@ export default function Home() {
 
     if (q) {
       setLoading(true);
-      try {
-        search(q);
-      } catch (err) {
-        console.error(err);
-      }
+      setError(undefined);
+
+      search(q);
     }
   }
 
   async function search(query: string) {
-    const res = await searchBrands(query);
+    let noScroll = false;
 
-    if (res) {
-      setFetched((prev) => [...prev, { query, results: res.results }]);
-      setAccordionValue(query);
-      setQ("");
-      setLoading(false);
+    try {
+      const res = await searchBrands(query);
+
+      if (res) {
+        const existing = fetched.find((f) => f.query === query);
+        if (existing) {
+          existing.results = res.results;
+          setFetched((prev) => [...prev]);
+          noScroll = true;
+        } else {
+          setFetched((prev) => [...prev, { query, results: res.results }]);
+        }
+        setAccordionValue(query);
+        setQ("");
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Fetch failed");
+    }
+
+    setLoading(false);
+    if (!noScroll) {
+      window.scrollTo(0, document.body.scrollHeight);
     }
   }
 
@@ -99,7 +115,7 @@ export default function Home() {
               </h3>
 
               <div className="flex flex-col gap-8">
-                {fetched.length > 0 || loading ? (
+                {fetched.length > 0 || loading || error ? (
                   <Accordion
                     value={accordionValue}
                     onValueChange={handleAccordionValueChanged}
@@ -143,8 +159,14 @@ export default function Home() {
                     ))}
 
                     {loading && (
-                      <div className="flex items-center justify-center">
+                      <div className="flex items-center justify-center py-4">
                         <LoadingSpinner />
+                      </div>
+                    )}
+
+                    {error && (
+                      <div className="flex items-center justify-center py-4 text-red-500">
+                        {error}
                       </div>
                     )}
                   </Accordion>

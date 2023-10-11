@@ -1,5 +1,6 @@
 import Image from "next/image";
 import shopifyIcon from "%/public/images/shopify-icon.png";
+import { Icon } from "@iconify/react";
 
 interface BrandCardProps {
   id: string;
@@ -39,16 +40,22 @@ export const BrandCard: React.FC<BrandCardProps> = (props) => {
           </div>
         </div>
 
-        <div className="flex flex-col items-end justify-around">
+        <div className="flex flex-col items-end justify-between">
           <div>
             <div className="font-bold">Match Score:</div>
             <div className="text-end font-light">
               {toPercent(props.matchScore)}%
             </div>
           </div>
+
           <div>
             <Image src={shopifyIcon} alt="shopify icon" height={64} />
             <div className="text-center font-bold">{props.shopifyRating}/5</div>
+          </div>
+
+          <div className="flex items-center gap-1 text-gray-600">
+            <Icon icon="fe:location" className="h-6 w-6" />
+            <div className="capitalize">{props.location}</div>
           </div>
         </div>
       </div>
